@@ -12,4 +12,4 @@ if [ ! -f "./databases/users.csv" ]; then
     touch ./databases/users.csv
 fi
 
-bash auth.sh
+source auth.sh

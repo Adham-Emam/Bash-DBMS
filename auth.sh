@@ -22,6 +22,7 @@ while true; do
                 if grep -q "$username:$login_hash$" ./databases/users.csv; then
                     clear
                     echo "Welcome Back, $username!"
+                    export USERNAME=$username
                     break 2
 
                 else
