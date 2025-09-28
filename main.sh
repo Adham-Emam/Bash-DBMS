@@ -2,6 +2,11 @@
 echo "Welcome to Bash-DBMS"
 
 
+for file in "./functions/"*.sh; do
+    source "$file"
+done
+
+
 # Check if databases directory exists
 if [ ! -d "databases" ]; then
     mkdir databases
@@ -11,5 +16,3 @@ fi
 if [ ! -f "./databases/users.csv" ]; then
     touch ./databases/users.csv
 fi
-
-source functions/auth.sh
