@@ -10,4 +10,5 @@ function selectDB {
 	validateDBName "$dbname"
 	if [[ $? -ne 0 ]]; then
 		return
+	fi
 }

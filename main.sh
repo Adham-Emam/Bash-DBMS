@@ -1,9 +1,8 @@
 #!/bin/bash
 echo "Welcome to Bash-DBMS"
-SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
-DB_MAIN_DIR="$SCRIPT_DIR/Databases"
 
-for file in "$SCRIPT_DIR/functions/"*.sh; do
+
+for file in "./functions/"*.sh; do
     source "$file"
 done
 
@@ -18,5 +17,6 @@ if [ ! -f "./databases/users.csv" ]; then
     touch ./databases/users.csv
 fi
 
+source auth.sh
 
 createDB
