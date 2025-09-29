@@ -16,3 +16,7 @@ fi
 if [ ! -f "./databases/users.csv" ]; then
     touch ./databases/users.csv
 fi
+
+source auth.sh
+
+createDB
