@@ -4,6 +4,7 @@ dropDB() {
     clear
     if ! find "$DB_ROOT/$USERNAME" -mindepth 1 -maxdepth 1 -type d | grep -q .; then
         echo "No databases found, please create one first."
+        sleep 2
         dbMainMenu
     else
         cd "$DB_ROOT/$USERNAME"
