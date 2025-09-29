@@ -2,10 +2,10 @@
 
 function renameDB {
     clear
-    if [[ ! -d ./databases/$USERNAME ]]; then
+    if [[ ! -d $DB_ROOT/$USERNAME ]]; then
         echo "No databases found, please create one first."
     else 
-        cd ./databases/$USERNAME
+        cd $DB_ROOT/$USERNAME
         echo "Available databases:"
         ls -d */ | sed 's:/$::'
 

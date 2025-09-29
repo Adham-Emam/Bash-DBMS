@@ -10,15 +10,15 @@ done
 
 
 # Check if databases directory exists
-if [ ! -d "databases" ]; then
-    mkdir databases
+if [ ! -d "$DB_ROOT" ]; then
+    mkdir $DB_ROOT
 fi
 
 # Check if users file exists
-if [ ! -f "./databases/users.csv" ]; then
-    touch ./databases/users.csv
+if [ ! -f "$DB_ROOT/users.csv" ]; then
+    touch $DB_ROOT/users.csv
 fi
 
-# auth
+auth
 
-dropDB
+dbMainMenu

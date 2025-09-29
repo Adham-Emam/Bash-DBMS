@@ -20,7 +20,7 @@ function auth {
                     login_hash=$(printf "%s" "$password" | sha256sum | awk '{print $1}')
 
                     # Check if the username and password match
-                    if grep -q "$username:$login_hash$" ./databases/users.csv; then
+                    if grep -q "$username:$login_hash$" $DB_ROOT/users.csv; then
                         clear
                         echo "Welcome Back, $username!"
                         export USERNAME=$username
@@ -44,7 +44,7 @@ function auth {
                     fi
 
                     # Check if the username already exists
-                    if grep -q "^$username:" ./databases/users.csv; then
+                    if grep -q "^$username:" $DB_ROOT/users.csv; then
                         clear
                         echo "Username already exists. Try another."
                         continue
@@ -81,7 +81,7 @@ function auth {
                 pass_hash=$(printf "%s" "$password" | sha256sum | awk '{print $1}')
 
                 # Store the username and password
-                echo "$username:$pass_hash" >> ./databases/users.csv
+                echo "$username:$pass_hash" >> $DB_ROOT/users.csv
                 clear
                 echo "Registration successful"
                 ;;
