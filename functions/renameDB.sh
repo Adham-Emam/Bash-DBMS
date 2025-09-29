@@ -4,6 +4,8 @@ function renameDB {
     clear
     if [[ ! -d $DB_ROOT/$USERNAME ]]; then
         echo "No databases found, please create one first."
+        sleep 2 
+        dbMainMenu
     else 
         cd $DB_ROOT/$USERNAME
         echo "Available databases:"
@@ -33,5 +35,6 @@ function renameDB {
         cd ../..
         clear
         echo "database renamed successfully"
+        sleep 2
     fi
 }

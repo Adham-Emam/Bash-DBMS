@@ -19,6 +19,7 @@ if [ ! -f "$DB_ROOT/users.csv" ]; then
     touch $DB_ROOT/users.csv
 fi
 
+
 auth
 
 dbMainMenu

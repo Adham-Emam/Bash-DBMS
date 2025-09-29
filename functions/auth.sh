@@ -1,8 +1,8 @@
 #!/bin/bash
 
 function auth {
+    clear
     while true; do
-        echo
         echo "1. Login"
         echo "2. Register"
         echo "3. Exit"

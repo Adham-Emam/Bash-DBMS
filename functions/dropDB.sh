@@ -1,6 +1,6 @@
 #!/bin/bash
 
-dropDB() {
+function dropDB {
     clear
     if ! find "$DB_ROOT/$USERNAME" -mindepth 1 -maxdepth 1 -type d | grep -q .; then
         echo "No databases found, please create one first."
@@ -39,5 +39,3 @@ dropDB() {
         db
     fi
 }
-
-dropDB
