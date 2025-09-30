@@ -2,131 +2,61 @@
 
 function createTable {
 	clear
-	echo "==============================================================================================================================================="
-	echo ""
-	echo "                                                              create Table in $dbname "
-	echo ""
-	echo "==============================================================================================================================================="
-	while true; do
-		read -p " enter table name or type exit : " tablename
-		if [[ $tablename == "exit" ]]; then
-			TablesMainMenu
-			return
+	while true; do 
+		read -p "enter the name of the table you want to create or type \q to exit: " tableName
+		if [[ $tableName == "\q" ]]; then
+			connectDB
+			return 0
 		fi
-		if ! validateTableName "$tablename"; then
+		if ! validateTableName "$tableName"; then
 			continue
 		fi
-		TABLE_PATH= "$DB_ROOT/$USERNAME/$dbname/$tablename.csv"
-		META_PATH="$DB_ROOT/$USERNAME/$dbname/${tablename}_meta.csv"
-		if [[ -f "$TABLE_PATH" ]]; then
-			echo "ERROR--table already exists!!"
+		if [[ -f "$connectedDB/$tableName.csv" ]]; then
+			echo "Error --> table already exists"
 			continue
 		fi
-		read -p "please enter  the number of columns" col_Num
+		if touch "$connectedDB/$tableName.csv"; then
+			echo "table created successfully"
+			sleep 2
 
-		if ! [[ "$col_Num" =~ ^[1-9][0-9]*$ ]]; then
-			echo "ERROR--column number must be a postive integar!!"
-			return
-		fi
-		local -a col_Names=()
-		local -a col_Types=()
-		local -a col_PKS=()
-		local -a col_Uniques=()
-		local -a col_Nullables=()
-		local primary_Key_Count=0
-		for (( j=1; j<=col_Num; j++)); do
+			# column input loop
 			while true; do
-				read -rp "Column #$j name: " col_Name
-				if ! validateColumnName "$col_Name"; then
-					continue
-				fi
-				# checking for duplicates
-				local is_Duplicate= false
-				for n in "{$col_Names[@]}"; do
-					if [[ "$n" == "$col_Name" ]]; then
-						is_Duplicate=true
-						break
-					fi
+				read -p "Type the name of the columns you want to add separated by a space: " columnName
 
+				header=""
+				ok=true   # local temporary marker
+
+				for column in $columnName; do
+				    if validateColumnName "$column"; then
+				        # Build header string (comma-separated)
+				        if [ -z "$header" ]; then
+				            header="$column"
+				        else
+				            header="$header,$column"
+				        fi
+				    else
+				        echo "❌ Invalid column name: $column"
+				        ok=false
+				        break
+				    fi
 				done
-				if is_Duplicate; then
-					echo "Column name : $col_Name is already in use"
-					continue
+
+				if $ok; then
+					# Write header to CSV file
+					echo "$header" > "$connectedDB/$tableName.csv"
+					echo "✅ Columns added to $tableName.csv"
+					sleep 2
+					break   # exit column input loop
+				else
+					echo "⚠️ Please try again."
 				fi
-				break
 			done
-			# checktype
-			local col_type
-			while true; do
-				read -rp "Column #$j type [string|int]: " col_type
-				col_type= "{$col_type,,}"
-				if [[ "$col_type" != "string" && "$col_type" != "int" ]]; then
-					echo "Invalid type; choose 'string' or 'int'."
-					continue
-				fi
-				break
-			done
-			# checking for primary
-			read -rp "Is this the Primary Key? (y/N): " ans_pk
-			local is_pk=false
-			if [[ "${ans_pk,,}" == "y" || "${ans_pk,,}" == "yes" ]]; then
-				is_pk=true
-				((primary_Key_Count++))
-			fi
-			# unique
-			read -rp "Should this column be unique? (y/N): " ans_unique
-			local is_unique=false
-			if [[ "${ans_unique,,}" == "y" || "${ans_unique,,}" == "yes" ]]; then
-				is_unique=true
-			fi
-			# nullable
-			read -rp "Can this column be NULL? (y/N): " ans_nullable
-			local is_nullable=false
-			if [[ "${ans_nullable,,}" == "y" || "${ans_nullable,,}" == "yes" ]]; then
-				is_nullable=true
-			fi
-			# store
-			col_Names+=("$col_Name")
-			col_Types+=("$col_type")
-			col_PKS+=("$is_pk")
-			col_Uniques+=("$is_unique")
-			col_Nullables+=("$is_nullable")
-		done
-		if [[ "$primary_Key_Count" -eq 0 ]]; then
-			echo "Error--no primary key defined! You must insert at least one pk."
-			continue
+
+			break   # exit outer createTable loop
+		else
+			echo "failed to create table check permission"
+			sleep 2
+			break
 		fi
-		(
-		IFS=','; echo "${col_Names[*]}"
-		) > "$TABLE_PATH" || { echo "Failed to write $TABLE_PATH"; rm -f "$TABLE_PATH" "$META_PATH"; continue; }
-		# meta csv
-		{
-			echo "Name,Type,PrimaryKey,Unique,Nullable"
-			for i in "${!col_Names[@]}"; do
-				printf '%s,%s,%s,%s,%s\n' \
-					"${col_Names[i]}" "${col_Types[i]}" "${col_PKS[i]}" "${col_Uniques[i]}" "${col_Nullables[i]}"
-			done
-		} > "$META_PATH" || { echo "Failed to write $META_PATH"; rm -f "$TABLE_PATH" "$META_PATH"; continue; }
-		echo "Table '$tablename' created successfully!"
-		echo "Data file: $TABLE_PATH"
-		echo "Meta file: $META_PATH"
-		while true; do
-			echo "What do you want to do next?"
-			echo "1) Return to Main Menu"
-			echo "2) Add Another Table"
-			read -rp "Choose [1-2]: " choice
-			case "$choice" in
-				1)
-					TablesMainMenu
-					return 0
-					;;
-				2)
-					break
-					;;
-				*)
-					echo "enter a valid choice please"
-					;;
-			esac
-		done
 	done
 }
