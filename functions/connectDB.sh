@@ -28,7 +28,7 @@ function connectDB {
             5)
                 selectFromTable ;;
             6)
-                deleteTable ;;
+                deleteFromTable ;;
             7)
                 executeSQLQuery ;;
             8)
