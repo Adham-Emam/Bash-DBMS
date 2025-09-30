@@ -56,5 +56,3 @@ function insertIntoTable {
         sleep 2
     fi
 }
-
-insertIntoTable
