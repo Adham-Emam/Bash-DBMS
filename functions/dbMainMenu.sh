@@ -10,7 +10,7 @@ function dbMainMenu {
        	echo "6) 💻 Execute SQL Query     - Run an SQL query"
        	echo "7) 🚪 Logout                  - Go back to registration menu"
 		echo "---------------------------------------------------------------------------------------"
-		read -p "please choose one of the above options numberd (1-7): " choice
+		read -p "please choose one of the above options number (1-7): " choice
 
 		case $choice in
 			1)

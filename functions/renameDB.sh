@@ -7,9 +7,8 @@ function renameDB {
         sleep 2 
         dbMainMenu
     else 
-        cd $DB_ROOT/$USERNAME
         echo "Available databases:"
-        ls -d */ | sed 's:/$::'
+        ls -d $DB_ROOT/$USERNAME/*/ | sed 's:/$::'
 
 
         while true; do
@@ -32,7 +31,6 @@ function renameDB {
         done
 
         mv "$dbName" "$newName"
-        cd ../..
         clear
         echo "database renamed successfully"
         sleep 2
