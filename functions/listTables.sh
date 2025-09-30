@@ -10,7 +10,7 @@ function listTables {
             sleep 2
             return 0
         fi
-        echo "Available databases:"
+        echo "Available tables:"
         ls "$connectedDB" | sed 's/\.[^.]*$//'
 
         read -p "Press Enter to exit: "

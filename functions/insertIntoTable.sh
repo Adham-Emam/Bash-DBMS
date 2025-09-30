@@ -5,7 +5,7 @@ function insertIntoTable {
         sleep 2
         return 0
     else
-        echo "Available databases:"
+        echo "Available tables:"
         ls "$connectedDB" | sed 's/\.[^.]*$//'
 
         while true; do
