@@ -7,8 +7,7 @@ function dbMainMenu {
         echo "3) ✏️ Rename Database        - Rename an existing database"
         echo "4) 🗑️ Drop Database         - Delete an existing database"
         echo "5) 🗃️ Show Databases        - Show all existing databases"
-       	echo "6) 💻 Execute SQL Query     - Run an SQL query"
-       	echo "7) 🚪 Logout                  - Go back to registration menu"
+       	echo "6) 🚪 Logout                  - Go back to registration menu"
 		echo "---------------------------------------------------------------------------------------"
 		read -p "please choose one of the above options number (1-7): " choice
 
@@ -24,8 +23,6 @@ function dbMainMenu {
 			5)
 				showDB ;;
 			6)
-				executeSQL ;;
-			7)
 				clear
 				echo "exiting bye bye"
 				sleep 2 

@@ -9,7 +9,8 @@ function connectDB {
         echo "4) ➕ Insert into Table    - Add a new record to a table"
         echo "5) 🔍 Select from Table    - Retrieve records from a table"
         echo "6) ❌ Delete Table Data    - Remove records from a table"
-        echo "7) 🚪 Go Back              - Return to the previous menu"
+       	echo "7) 💻 Execute SQL Query     - Run an SQL query"
+        echo "8) 🚪 Go Back              - Return to the previous menu"
 	    echo "---------------------------------------------------------------------------------------"
 
 
@@ -29,6 +30,8 @@ function connectDB {
             6)
                 deleteTable ;;
             7)
+                executeSQLQuery ;;
+            8)
                 return ;;
             *)
                 echo "invalid choice"
