@@ -9,10 +9,10 @@ function dropTable {
         ls "$connectedDB" | sed 's/\.[^.]*$//'
 
         while true; do
-            read -p "Enter the name of the table you want to delete: " tableName
+            read -p "Enter the name of the table you want to Drop: " tableName
             if [[ -f "$connectedDB/$tableName.csv" ]]; then
                 while true; do
-                    read -s -p "Enter password to delete the table: " password
+                    read -s -p "Enter password to Drop the table: " password
                     echo
 
                     # Hash the password
@@ -30,7 +30,7 @@ function dropTable {
         done
 
         rm "$connectedDB/$tableName.csv"
-        echo "Table deleted successfully."
+        echo "Table Dropped successfully."
         sleep 2
     fi
 }
