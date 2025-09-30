@@ -4,8 +4,7 @@ function createTable {
 	clear
 	while true; do 
 		read -p "enter the name of the table you want to create or type \q to exit: " tableName
-		if [[ $tableName == "\q" ]]; then
-			connectDB
+		if [[ $tableName == "q" ]]; then
 			return 0
 		fi
 		if ! validateTableName "$tableName"; then
